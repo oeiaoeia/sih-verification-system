@@ -21,17 +21,17 @@ export default function RootLayout({
         {/* Navigation Bar */}
         <header className="bg-slate-900 text-white shadow-md">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <a href="/" className="flex items-center gap-3 hover:opacity-90 transition">
               <Scale size={28} className="text-blue-400" />
               <div>
                 <h1 className="font-bold text-xl leading-tight">E-MaapTol Verification</h1>
                 <p className="text-xs text-slate-400">Dept. of Legal Metrology, Govt of India</p>
               </div>
-            </div>
+            </a>
             <div className="hidden md:flex gap-6 text-sm font-semibold text-slate-300">
               <a href="/" className="hover:text-white transition">Home</a>
               <a href="/public/scan" className="hover:text-white transition">Verify Instrument</a>
-              <a href="/inspector/dashboard" className="text-blue-400 hover:text-blue-300 transition">Inspector Login</a>
+              <a href="/inspector/login" className="text-blue-400 hover:text-blue-300 transition">Inspector Login</a>
             </div>
           </div>
         </header>
@@ -44,7 +44,7 @@ export default function RootLayout({
         {/* Footer */}
         <footer className="bg-slate-900 text-slate-400 py-6 text-center text-sm border-t border-slate-800 mt-auto">
           <p>© 2026 Ministry of Consumer Affairs, Food & Public Distribution.</p>
-          <p className="mt-1">Built by Team C-Men (SIH26036) for Smart India Hackathon.</p>
+          <p className="mt-1">Built by Team C-Men (SIH26036) for Smart India Hackathon. <a href="/about" className="text-blue-400 hover:underline">About the Project</a></p>
         </footer>
       </body>
     </html>

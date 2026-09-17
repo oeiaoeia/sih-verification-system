@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Camera, CheckCircle, AlertTriangle, Scale, ArrowLeft, XCircle } from 'lucide-react';
+import { Camera, CheckCircle, AlertTriangle, Scale, ArrowLeft, XCircle, FileImage } from 'lucide-react';
 import Link from 'next/link';
+import jsQR from 'jsqr';
 
 function ScannerContent() {
   const searchParams = useSearchParams();
@@ -12,6 +13,9 @@ function ScannerContent() {
   const [step, setStep] = useState<'scan' | 'scanning' | 'result' | 'report' | 'success' | 'error'>('scan');
   const [result, setResult] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  
+  const qrInputRef = useRef<HTMLInputElement>(null);
+  const qrUploadRef = useRef<HTMLInputElement>(null);
   
   // Form State
   const [phone, setPhone] = useState('');
@@ -55,9 +59,47 @@ function ScannerContent() {
   };
 
   const startScan = () => {
-    // In a real app, this would open a QR reader.
-    // Since we're demonstrating URL-based QR codes, we simulate it here if no token is passed.
-    alert("Please scan one of the generated QR codes from the /qrcodes folder using your phone's camera, or append ?token=<token> to the URL.");
+    // Manually trigger the hidden file input
+    qrInputRef.current?.click();
+  };
+
+  const handleQRFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+          
+          if (code) {
+            try {
+              const url = new URL(code.data);
+              const token = url.searchParams.get('token');
+              if (token) {
+                verifyToken(token);
+              } else {
+                alert('No token found in QR code URL.');
+              }
+            } catch (err) {
+              alert('Invalid QR code format.');
+            }
+          } else {
+            alert('No QR code found in image.');
+          }
+        }
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSendOTP = (e: React.FormEvent) => {
@@ -65,8 +107,24 @@ function ScannerContent() {
     setOtpSent(true);
   };
 
-  const handleReportSubmit = (e: React.FormEvent) => {
+  const handleReportSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (result?.id) {
+      try {
+        await fetch('/api/report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            instrument_id: result.id,
+            reporter_phone: phone 
+          })
+        });
+      } catch (err) {
+        console.error('Failed to submit report', err);
+      }
+    } else {
+      alert("Error: No instrument ID found in result. The flag will not be saved to the database.");
+    }
     setStep('success');
   };
 
@@ -89,8 +147,16 @@ function ScannerContent() {
               <h2 className="text-2xl font-bold text-slate-900">Verify an Instrument</h2>
               <p className="text-slate-500 mt-2 max-w-sm">Scan the official QR/RFID tag on any weighbridge or fuel dispenser to check its Legal Metrology compliance.</p>
             </div>
+            <input 
+              type="file" 
+              accept="image/*" 
+              capture="environment" 
+              ref={qrInputRef} 
+              onChange={handleQRFile} 
+              className="hidden" 
+            />
             <button 
-              onClick={startScan}
+              onClick={() => qrInputRef.current?.click()}
               className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl flex items-center justify-center gap-3 text-lg font-bold hover:bg-blue-700 shadow-lg shadow-blue-500/25 transition-all"
             >
               <Camera size={24} />
@@ -164,6 +230,10 @@ function ScannerContent() {
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Registered Owner</p>
                     <p className="text-slate-800">{result.owner_name}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Linked E-Way Bill</p>
+                    <p className="text-slate-800 font-mono">EWB-2026-{result.qr_code_id.replace(/-/g, '').substring(0, 6)}</p>
                   </div>
                 </div>
               </div>

@@ -19,14 +19,14 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const instrumentsData = [
-  { qr_code_id: 'WB-DEL-01', instrument_type: 'Weighbridge', location_name: 'Delhi-Gurgaon Highway Checkpoint 1', status: 'Valid', owner_name: 'NHAI Logistics' },
-  { qr_code_id: 'FD-NH48-02', instrument_type: 'Fuel Dispenser', location_name: 'NH48 Fuel Station (IndianOil)', status: 'Valid', owner_name: 'IndianOil Corp' },
-  { qr_code_id: 'WB-MUM-03', instrument_type: 'Weighbridge', location_name: 'Mumbai Port Trust Entry', status: 'Valid', owner_name: 'JNPT Freight' },
-  { qr_code_id: 'FD-BLR-04', instrument_type: 'Fuel Dispenser', location_name: 'Bangalore City Center HP', status: 'Expired', owner_name: 'HPCL' },
-  { qr_code_id: 'WB-CHN-05', instrument_type: 'Weighbridge', location_name: 'Chennai Logistics Park', status: 'Valid', owner_name: 'South Freight Movers' },
-  { qr_code_id: 'FD-HYD-06', instrument_type: 'Fuel Dispenser', location_name: 'Hyderabad Outer Ring Road BPCL', status: 'Valid', owner_name: 'BPCL' },
-  { qr_code_id: 'WB-KOL-07', instrument_type: 'Weighbridge', location_name: 'Kolkata Dock System', status: 'Valid', owner_name: 'Kolkata Port Trust' },
-  { qr_code_id: 'FD-PUN-08', instrument_type: 'Fuel Dispenser', location_name: 'Pune-Mumbai Expressway Reliance', status: 'Valid', owner_name: 'Reliance Petroleum' },
+  { qr_code_id: 'WB-MUM-01', instrument_type: 'Weighbridge', location_name: 'Mumbai Port Trust Entry', status: 'Valid', owner_name: 'JNPT Freight' },
+  { qr_code_id: 'FD-PUN-02', instrument_type: 'Fuel Dispenser', location_name: 'Pune-Mumbai Expressway Reliance', status: 'Valid', owner_name: 'Reliance Petroleum' },
+  { qr_code_id: 'WB-NGP-03', instrument_type: 'Weighbridge', location_name: 'Nagpur Logistics Park MIHAN', status: 'Valid', owner_name: 'Vidarbha Logistics' },
+  { qr_code_id: 'FD-NSK-04', instrument_type: 'Fuel Dispenser', location_name: 'Nashik Highway HP Center', status: 'Expired', owner_name: 'HPCL' },
+  { qr_code_id: 'WB-THN-05', instrument_type: 'Weighbridge', location_name: 'Thane-Belapur Road Checkpoint', status: 'Valid', owner_name: 'Navi Mumbai Freight' },
+  { qr_code_id: 'FD-AUR-06', instrument_type: 'Fuel Dispenser', location_name: 'Aurangabad MIDC BPCL', status: 'Valid', owner_name: 'BPCL' },
+  { qr_code_id: 'WB-SOL-07', instrument_type: 'Weighbridge', location_name: 'Solapur Highway Entry', status: 'Valid', owner_name: 'South Maharashtra Movers' },
+  { qr_code_id: 'FD-KOL-08', instrument_type: 'Fuel Dispenser', location_name: 'Kolhapur City IndianOil', status: 'Valid', owner_name: 'IndianOil Corp' },
 ];
 
 async function seed() {

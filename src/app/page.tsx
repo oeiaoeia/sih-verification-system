@@ -22,7 +22,7 @@ export default function Home() {
               <Truck size={20} />
               Transporter Scan
             </Link>
-            <Link href="/inspector/dashboard" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-white/20 transition border border-white/20">
+            <Link href="/inspector/login" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-white/20 transition border border-white/20">
               <ShieldCheck size={20} />
               Inspector Dashboard
             </Link>
@@ -34,19 +34,19 @@ export default function Home() {
       <section className="py-12 bg-white px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-200 text-center">
           <div>
-            <p className="text-4xl font-extrabold text-blue-600">14.2k</p>
+            <p className="text-4xl font-extrabold text-blue-600">-</p>
             <p className="text-sm text-slate-500 font-medium uppercase mt-1">Verified Instruments</p>
           </div>
           <div>
-            <p className="text-4xl font-extrabold text-blue-600">89%</p>
+            <p className="text-4xl font-extrabold text-blue-600">-</p>
             <p className="text-sm text-slate-500 font-medium uppercase mt-1">Compliance Rate</p>
           </div>
           <div>
-            <p className="text-4xl font-extrabold text-red-500">342</p>
+            <p className="text-4xl font-extrabold text-red-500">-</p>
             <p className="text-sm text-slate-500 font-medium uppercase mt-1">Tampering Flags</p>
           </div>
           <div>
-            <p className="text-4xl font-extrabold text-blue-600">1.2m</p>
+            <p className="text-4xl font-extrabold text-blue-600">-</p>
             <p className="text-sm text-slate-500 font-medium uppercase mt-1">E-Way Bills Secured</p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="bg-blue-600 py-16 px-6 text-center text-white">
         <h3 className="text-2xl font-bold mb-6">Are you an authorized Legal Metrology Inspector?</h3>
-        <Link href="/inspector/scan" className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-8 py-3 rounded-full hover:bg-slate-100 transition shadow-lg">
+        <Link href="/inspector/login" className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold px-8 py-3 rounded-full hover:bg-slate-100 transition shadow-lg">
           Launch Field Scanner <ArrowRight size={18} />
         </Link>
       </section>

@@ -12,17 +12,22 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { token, display_image_base64, seal_image_base64 } = body;
 
+    console.log("Verify API received token:", token);
+    console.log("Verify API connecting to:", supabaseUrl);
+
     if (!token) {
       return NextResponse.json({ valid: false, message: 'No QR token provided' }, { status: 400 });
     }
 
-    // 1. Fetch Instrument Details from Supabase using qr_token
+    // 1. Fetch instrument from database
     const { data: instrument, error } = await supabase
       .from('instruments')
       .select('*')
       .eq('qr_token', token)
       .single();
       
+    console.log("Supabase query result:", { instrument, error });
+
     if (error || !instrument) {
       return NextResponse.json({ valid: false, message: "Not a registered instrument" }, { status: 404 });
     }
