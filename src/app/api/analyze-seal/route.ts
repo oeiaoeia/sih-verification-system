@@ -25,7 +25,7 @@ export async function POST(req: Request) {
           content: [
             { type: 'text', text: 'Analyze this physical lead seal and wire. Is it "Intact" or "Tampered"? Reply with ONLY ONE WORD: either "Intact" or "Tampered". Do not include any other text.' },
             { type: 'image_url', image_url: { url: base64Url } }
-          ]
+          ] as any
         }
       ],
       model: 'qwen/qwen3.8-27b',

@@ -27,7 +27,7 @@ export async function POST(req: Request) {
           content: [
             { type: 'text', text: 'Extract just the numeric weight reading from this digital display image. Return only the number and the unit (like "12450.00 kg"). Do not include any other conversational text.' },
             { type: 'image_url', image_url: { url: base64Url } }
-          ]
+          ] as any
         }
       ],
       model: 'qwen/qwen3.8-27b',
