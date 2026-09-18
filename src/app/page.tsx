@@ -49,47 +49,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-slate-50 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl font-bold text-slate-900">How The Ecosystem Works</h3>
-            <p className="text-slate-600 mt-4 max-w-2xl mx-auto">Re-engineering Legal Metrology enforcement from paper stickers to a real-time, two-sided verification network.</p>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                <ShieldCheck size={28} />
-              </div>
-              <h4 className="text-xl font-bold mb-3">AI Seal Verification</h4>
-              <p className="text-slate-600 leading-relaxed">
-                Computer Vision checks seal textures and edges to instantly flag peeled, re-glued, or photocopied calibration seals using on-device inference.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-14 h-14 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
-                <Activity size={28} />
-              </div>
-              <h4 className="text-xl font-bold mb-3">OCR Reading Checks</h4>
-              <p className="text-slate-600 leading-relaxed">
-                Automated reading of 7-segment digital weighbridge displays and analog fuel dials to cross-reference live values against dead-weights.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-              <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6">
-                <AlertTriangle size={28} />
-              </div>
-              <h4 className="text-xl font-bold mb-3">Crowdsourced Triage</h4>
-              <p className="text-slate-600 leading-relaxed">
-                Transporters and citizens can flag suspected discrepancies. OTP-verified reports queue instruments for priority auditing instead of annual cycles.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="bg-blue-600 py-16 px-6 text-center text-white">
