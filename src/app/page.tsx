@@ -13,14 +13,11 @@ export default function Home() {
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight">
             Digital Trust for India's <br className="hidden md:block"/> Transport Backbone
           </h2>
-          <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
-            An AI and Computer-Vision-based Remote Verification Assistant that stops under-weighing fraud, verifies e-way bills, and ensures fair trade at every weighbridge and fuel station.
-          </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <Link href="/public/scan" className="w-full sm:w-auto bg-green-500 text-slate-900 font-bold px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-green-400 transition shadow-lg shadow-green-500/20">
               <Truck size={20} />
-              Transporter Scan
+              User Dashboard
             </Link>
             <Link href="/inspector/login" className="w-full sm:w-auto bg-white/10 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-white/20 transition border border-white/20">
               <ShieldCheck size={20} />
