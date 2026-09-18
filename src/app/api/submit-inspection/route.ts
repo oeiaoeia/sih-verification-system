@@ -41,10 +41,18 @@ export async function POST(req: Request) {
         
       if (updateError) throw updateError;
     } else {
-      // Reset it to Valid if it passed
+      // Recertify it: Reset to Valid and extend expiry by 1 year from today
+      const today = new Date();
+      const nextYear = new Date();
+      nextYear.setFullYear(today.getFullYear() + 1);
+
       const { error: updateError } = await supabase
         .from('instruments')
-        .update({ status: 'Valid' })
+        .update({ 
+          status: 'Valid',
+          calibration_date: today.toISOString().split('T')[0],
+          expiry_date: nextYear.toISOString().split('T')[0]
+        })
         .eq('id', instrument_id);
         
       if (updateError) throw updateError;
