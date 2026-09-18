@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Camera, CheckCircle, AlertTriangle, Scale, ArrowLeft, XCircle, FileImage } from 'lucide-react';
+import { Camera, CheckCircle, AlertTriangle, Scale, ArrowLeft, XCircle, FileImage, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import jsQR from 'jsqr';
 
@@ -22,6 +22,7 @@ function ScannerContent() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [expectedOtp, setExpectedOtp] = useState('');
+  const [macNotification, setMacNotification] = useState<{show: boolean, message: string} | null>(null);
 
   // Auto-verify if token is present in URL
   useEffect(() => {
@@ -112,19 +113,15 @@ function ScannerContent() {
     setExpectedOtp(generated);
     setOtpSent(true);
 
-    // Request notification permission if we haven't already
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-
-    // Simulate SMS arrival with desktop notification or alert after 1.5 seconds
+    // Simulate SMS arrival with MacOS style in-app toast after 1.5 seconds
     setTimeout(() => {
       const msg = `Your Legal Metrology verification code is: ${generated}`;
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('SMS Received', { body: msg, icon: '/favicon.ico' });
-      } else {
-        alert(`[SIMULATED SMS to ${phone}]\n\n${msg}`);
-      }
+      setMacNotification({ show: true, message: msg });
+      
+      // Auto dismiss after 6 seconds
+      setTimeout(() => {
+        setMacNotification(null);
+      }, 6000);
     }, 1500);
   };
 
@@ -333,6 +330,27 @@ function ScannerContent() {
         )}
 
       </div>
+
+      {/* MacOS Style Notification Toast */}
+      {macNotification?.show && (
+        <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-right-8 fade-in duration-300">
+          <div className="w-80 bg-white/70 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-2xl overflow-hidden">
+            <div className="flex items-start p-4 gap-3">
+              <div className="bg-green-500 rounded-full w-10 h-10 flex items-center justify-center shrink-0">
+                <MessageSquare className="text-white" size={20} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-baseline mb-0.5">
+                  <h4 className="font-semibold text-slate-900 text-sm">Messages</h4>
+                  <span className="text-[10px] text-slate-500 font-medium">Now</span>
+                </div>
+                <p className="text-sm text-slate-800 font-bold truncate">Legal Metrology</p>
+                <p className="text-sm text-slate-600 line-clamp-2 mt-0.5">{macNotification.message}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
