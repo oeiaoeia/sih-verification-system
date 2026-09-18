@@ -21,6 +21,7 @@ function ScannerContent() {
   const [phone, setPhone] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
+  const [expectedOtp, setExpectedOtp] = useState('');
 
   // Auto-verify if token is present in URL
   useEffect(() => {
@@ -104,11 +105,37 @@ function ScannerContent() {
 
   const handleSendOTP = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!phone) return;
+    
+    // Generate a random 4-digit OTP
+    const generated = Math.floor(1000 + Math.random() * 9000).toString();
+    setExpectedOtp(generated);
     setOtpSent(true);
+
+    // Request notification permission if we haven't already
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Simulate SMS arrival with desktop notification or alert after 1.5 seconds
+    setTimeout(() => {
+      const msg = `Your Legal Metrology verification code is: ${generated}`;
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('SMS Received', { body: msg, icon: '/favicon.ico' });
+      } else {
+        alert(`[SIMULATED SMS to ${phone}]\n\n${msg}`);
+      }
+    }, 1500);
   };
 
   const handleReportSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (otp !== expectedOtp && expectedOtp !== '') {
+      alert("Invalid OTP! Please enter the correct code sent to your phone.");
+      return;
+    }
+
     if (result?.id) {
       try {
         await fetch('/api/report', {
